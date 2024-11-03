@@ -8,7 +8,7 @@ from ...serializers import TemplateSerializer
 
 
 class TemplateListView(APIView):
-    """Endpoint to retrieve a list of templates"""
+    """View to handle CRUD of templates"""
 
     @swagger_auto_schema(
         operation_description="Retrieve a list of templates.",
@@ -18,3 +18,35 @@ class TemplateListView(APIView):
         templates = Template.objects.all()
         serializer = TemplateSerializer(templates, many=True)
         return Response(serializer.data)
+
+    """ Endpoint to create a template """
+
+    @swagger_auto_schema(
+        operation_description="Create a new template.",
+        request_body=openapi.Schema(
+            type=openapi.TYPE_OBJECT,
+            properties={
+                "name": openapi.Schema(type=openapi.TYPE_STRING),
+                "description": openapi.Schema(type=openapi.TYPE_STRING),
+                "image_link": openapi.Schema(type=openapi.TYPE_STRING),
+            },
+        ),
+        responses={
+            201: openapi.Response(description="New Template Created"),
+            400: openapi.Response(
+                description="Bad Request - Validation Errors",
+                examples={
+                    "application/json": {
+                        "name": ["This field is required."],
+                        "image_link": ["Invalid URL format."],
+                    }
+                },
+            ),
+        },
+    )
+    def post(self, request):
+        serializer = TemplateSerializer(data=request.data)
+        if serializer.is_valid():
+            serializer.save()
+            return Response(serializer.data, status=201)
+        return Response(serializer.errors, status=400)
