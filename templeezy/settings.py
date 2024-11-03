@@ -43,6 +43,7 @@ INSTALLED_APPS = [
     "django.contrib.sessions",
     "django.contrib.messages",
     "django.contrib.staticfiles",
+    'drf_yasg',
     "rest_framework",
     "menus",
 ]
@@ -84,11 +85,11 @@ WSGI_APPLICATION = "templeezy.wsgi.application"
 DATABASES = {
     "default": {
         "ENGINE": "django.db.backends.postgresql",
-        "HOST": env("DB_NAME"),
+        "HOST": env("DB_HOST"),
         "PORT": env("DB_PORT"),
         "USER": env("DB_USER"),
-        "PASSWORD": env("DB_PASS"),
-        "NAME": "templeezy",
+        "PASSWORD": env("DB_PASSWORD"),
+        "NAME": env("DB_NAME"),
     }
 }
 
