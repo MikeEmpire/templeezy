@@ -11,6 +11,12 @@ https://docs.djangoproject.com/en/5.1/ref/settings/
 """
 
 from pathlib import Path
+import environ
+
+
+# Load environment variables from.env file
+env = environ.Env()
+environ.Env.read_env()
 
 # Build paths inside the project like this: BASE_DIR / 'subdir'.
 BASE_DIR = Path(__file__).resolve().parent.parent
@@ -78,10 +84,10 @@ WSGI_APPLICATION = "templeezy.wsgi.application"
 DATABASES = {
     "default": {
         "ENGINE": "django.db.backends.postgresql",
-        "HOST": "localhost",
-        "PORT": "5432",
-        "USER": "your_username",
-        "PASSWORD": "your_password",
+        "HOST": env("DB_NAME"),
+        "PORT": env("DB_PORT"),
+        "USER": env("DB_USER"),
+        "PASSWORD": env("DB_PASS"),
         "NAME": "templeezy",
     }
 }
