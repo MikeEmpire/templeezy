@@ -26,6 +26,11 @@ A Django API to create customizable menu templates and generate menu files.
     ```
 - Access Swagger API docs at `/swagger/`.
 
+## Getting Started
+
+### Initialize Environment variables
+
+
 ## Dependencies
 - Django
 - Django REST Framework
